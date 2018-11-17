@@ -6,13 +6,8 @@ import './App.css';
 import Home from './components/screens/Home';
 import Register from './components/screens/Register';
 import Login from './components/screens/Login';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import rootReducer from './rootReducer';
-import { composeWithDevTools } from 'redux-devtools-extension';
-
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+import store from './store';
 
 function App() {
   return (
