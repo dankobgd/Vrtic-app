@@ -3,13 +3,13 @@ import Navigation from './components/navigation/Navigation';
 import '../node_modules/semantic-ui-css/semantic.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Home from './components/Home';
-import Register from './components/Register';
-import Login from './components/Login';
+import Home from './components/screens/Home';
+import Register from './components/screens/Register';
+import Login from './components/screens/Login';
 
 function App() {
   return (
-    <v className='App'>
+    <div className='App'>
       <Router>
         <>
           <Navigation />
@@ -21,7 +21,7 @@ function App() {
           </Switch>
         </>
       </Router>
-    </v>
+    </div>
   );
 }
 
