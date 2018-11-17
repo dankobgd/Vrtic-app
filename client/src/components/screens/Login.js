@@ -3,7 +3,12 @@ import { Formik } from 'formik';
 import { Container, Form, Button } from 'semantic-ui-react';
 
 function Login() {
-  return <BasicForm />;
+  return (
+    <div>
+      <h1>Login Page</h1>
+      <BasicForm />
+    </div>
+  );
 }
 
 const BasicForm = () => (
