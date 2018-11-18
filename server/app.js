@@ -1,13 +1,15 @@
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const dotenv = require('dotenv');
-const createError = require('http-errors');
 const logger = require('morgan');
-const { sequelize, Sequelize } = require('./models');
-
-const app = express();
+const { sequelize } = require('./db-models');
+const middleware = require('./middleware/middleware');
+const config = require('./config/config');
 
 dotenv.config();
+const app = express();
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -17,24 +19,26 @@ app.use(express.urlencoded({ extended: false }));
 //   res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'));
 // });
 
-const usersRouter = require('./routes/users');
+const routesDir = path.join(__dirname, 'routes');
+fs.readdirSync(routesDir).forEach(file => {
+  const routerFile = require(path.join(routesDir, file));
+  const routeName = `${file.slice(0, -3)}`;
+  let routeEndpoint;
 
-app.use('/users', usersRouter);
+  if (file === 'signup.js' || file === 'login.js') {
+    routeEndpoint = `/api/auth/${routeName}`;
+  } else {
+    routeEndpoint = `/api/${routeName}`;
+  }
 
-app.use((req, res, next) => {
-  next(createError(404));
+  app.use(routeEndpoint, routerFile);
 });
 
-app.use((err, req, res, next) => {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  res.status(err.status || 500);
-  res.json({ err });
-});
+app.use(middleware.forward404);
+app.use(middleware.errorHandler);
 
 sequelize.sync().then(() => {
-  console.log('Sequelize sync, App running on port 3000');
+  console.log(`Sequelize sync -> App running on port ${config.port}`);
 });
 
 module.exports = app;
