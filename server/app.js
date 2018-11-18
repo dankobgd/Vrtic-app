@@ -3,7 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const dotenv = require('dotenv');
 const logger = require('morgan');
-const { sequelize } = require('./db-models');
+const { sequelize } = require('./models');
 const middleware = require('./middleware/middleware');
 const config = require('./config/config');
 

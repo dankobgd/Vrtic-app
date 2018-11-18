@@ -4,13 +4,13 @@ const { Op } = require('sequelize');
 module.exports = {
   port: 3001,
   db: {
-    database: process.env.DB_NAME || 'vrtic-app',
+    database: process.env.DB_NAME || 'vrtic-database',
     user: process.env.DB_USER || null,
     password: process.env.DB_PASSWORD || null,
     options: {
       dialect: process.env.DIALECT || 'sqlite',
       host: process.env.HOST || 'localhost',
-      storage: path.resolve(__dirname, '../db-storage/vrtic-app.db'),
+      storage: path.resolve(__dirname, '../../../../SQLite3 DB/vrtic-database.db'),
       pool: {
         max: 5,
         min: 0,
