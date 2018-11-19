@@ -1,3 +1,4 @@
 module.exports.signup = (req, res, next) => {
-  res.json({ msg: 'Sign up' });
+  console.log('login: ', req.body);
+  res.json({ msg: 'signup', body: req.body });
 };

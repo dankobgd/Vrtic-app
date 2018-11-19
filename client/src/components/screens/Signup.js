@@ -5,7 +5,7 @@ import { Container, Form, Button } from 'semantic-ui-react';
 function Login() {
   return (
     <div>
-      <h1>Login Page</h1>
+      <h1>Signup Page</h1>
       <BasicForm />
     </div>
   );
@@ -15,7 +15,7 @@ const BasicForm = () => (
   <Formik
     initialValues={{ email: '', password: '' }}
     onSubmit={(values, actions) => {
-      fetch('/api/auth/login', {
+      fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',

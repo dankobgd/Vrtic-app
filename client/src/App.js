@@ -4,7 +4,7 @@ import '../node_modules/semantic-ui-css/semantic.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Home from './components/screens/Home';
-import Register from './components/screens/Register';
+import Signup from './components/screens/Signup';
 import Login from './components/screens/Login';
 import { Provider } from 'react-redux';
 import store from './store';
@@ -18,7 +18,7 @@ function App() {
             <Navigation />
             <Switch>
               <Route exact path='/' component={Home} />
-              <Route exact path='/register' component={Register} />
+              <Route exact path='/signup' component={Signup} />
               <Route exact path='/login' component={Login} />
               <Route render={() => <h1>PAGE NOT FOUND 404</h1>} />
             </Switch>

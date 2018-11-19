@@ -1,3 +1,4 @@
 module.exports.login = (req, res, next) => {
-  res.json({ msg: 'log in' });
+  console.log('login: ', req.body);
+  res.json({ msg: 'login', body: req.body });
 };
