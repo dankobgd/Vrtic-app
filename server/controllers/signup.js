@@ -13,7 +13,7 @@ module.exports.signup = wrap(async (req, res, next) => {
   }
 
   // create new user record in db
-  const newUser = await User.create({ email, password });
+  const newUser = await User.create({ email, password, auth_method: 'local' });
 
   // respond with JWT
   const token = signToken(newUser);

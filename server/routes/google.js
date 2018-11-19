@@ -5,6 +5,6 @@ const GoogleOauthController = require('../controllers/google');
 
 const router = express.Router();
 
-router.post('/', passport.authenticate('GooglePlusToken', { session: false }), GoogleOauthController.auth);
+router.post('/', passport.authenticate('GooglePlusToken', { session: false }), GoogleOauthController.googleOauth);
 
 module.exports = router;

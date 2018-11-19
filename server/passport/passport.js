@@ -71,9 +71,25 @@ passport.use(
       clientSecret: '-EJpDJUSKHCrzhDYkqoUhpdK ',
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log('access: ', accessToken);
-      console.log('refresh: ', refreshToken);
-      console.log('profile: ', profile);
+      try {
+        // check if current user exists in DB
+        const existingUser = await User.findOne({ where: { googleID: profile.id } });
+        if (existingUser) {
+          // user already exist in DB
+          return done(null, existingUser);
+        }
+
+        // doesnt exist -> create new one
+        const newUser = User.create({
+          auth_method: 'google',
+          googleID: profile.id,
+          email: profile.emails[0].value,
+        });
+
+        done(null, newUser);
+      } catch (error) {
+        done(error, false, error.message);
+      }
     }
   )
 );
