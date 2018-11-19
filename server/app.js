@@ -28,6 +28,8 @@ fs.readdirSync(routesDir).forEach(file => {
 
   if (route === 'signup' || route === 'login') {
     endpoint = `/api/auth/${route}`;
+  } else if (route === 'google') {
+    endpoint = `/api/auth/oauth/${route}`;
   } else {
     endpoint = `/api/${route}`;
   }
