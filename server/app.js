@@ -38,7 +38,7 @@ fs.readdirSync(routesDir).forEach(file => {
 app.use(middleware.forward404);
 app.use(middleware.errorHandler);
 
-sequelize.sync().then(() => {
+sequelize.sync({ force: false }).then(() => {
   console.log(`App running on port ${config.port}`);
 });
 
