@@ -11,6 +11,7 @@ dotenv.config();
 const app = express();
 
 app.use(logger('dev'));
+app.use(middleware.enableCORS);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // app.use(express.static(path.join(__dirname, '../client/build')));
@@ -22,16 +23,16 @@ app.use(express.urlencoded({ extended: false }));
 const routesDir = path.join(__dirname, 'routes');
 fs.readdirSync(routesDir).forEach(file => {
   const routerFile = require(path.join(routesDir, file));
-  const routeName = `${file.slice(0, -3)}`;
-  let routeEndpoint;
+  const route = `${file.slice(0, -3)}`;
+  let endpoint;
 
-  if (file === 'signup.js' || file === 'login.js') {
-    routeEndpoint = `/api/auth/${routeName}`;
+  if (route === 'signup' || route === 'login') {
+    endpoint = `/api/auth/${route}`;
   } else {
-    routeEndpoint = `/api/${routeName}`;
+    endpoint = `/api/${route}`;
   }
 
-  app.use(routeEndpoint, routerFile);
+  app.use(endpoint, routerFile);
 });
 
 app.use(middleware.forward404);
