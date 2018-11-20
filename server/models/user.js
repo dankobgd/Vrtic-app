@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     googleID: {
       type: DataTypes.STRING,
     },
-
     facebookID: {
       type: DataTypes.STRING,
     },
