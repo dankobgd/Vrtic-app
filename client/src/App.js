@@ -3,9 +3,9 @@ import Navigation from './components/navigation/Navigation';
 import '../node_modules/semantic-ui-css/semantic.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Home from './components/screens/Home';
-import Signup from './components/screens/Signup';
-import Login from './components/screens/Login';
+import Home from './screens/Home';
+import Signup from './screens/Signup';
+import Login from './screens/Login';
 import { Provider } from 'react-redux';
 import store from './store';
 
