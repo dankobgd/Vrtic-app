@@ -41,7 +41,7 @@ app.use(middleware.forward404);
 app.use(middleware.errorHandler);
 
 sequelize.sync({ force: false }).then(() => {
-  console.log(`App running on port ${config.port}`);
+  console.log(`DB sync`);
 });
 
 module.exports = app;

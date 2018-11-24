@@ -2,8 +2,10 @@ import React from 'react';
 import { Formik } from 'formik';
 import { Grid, Container, Form, Button } from 'semantic-ui-react';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
+import signupActions from '../modules/signup';
 
-function Login() {
+function Signup() {
   return (
     <div>
       <h1>Signup Page</h1>
@@ -44,7 +46,7 @@ const BasicForm = () => (
     initialValues={{ email: '', password: '', confirmPassword: '' }}
     validationSchema={signupSchema}
     onSubmit={(values, actions) => {
-      sendFormData(values, actions);
+      console.log('form data: ', values);
     }}
     render={({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
       <Container>
@@ -88,26 +90,4 @@ const BasicForm = () => (
   />
 );
 
-function sendFormData(values, { setSubmitting, setErrors }) {
-  fetch('/auth/signup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(values),
-  })
-    .then(res => res.json())
-    .then(data => {
-      const serverErrors = {};
-
-      data.details.forEach(d => {
-        serverErrors[d.context.label] = d.message;
-      });
-
-      setErrors(serverErrors);
-      setSubmitting(false);
-    })
-    .catch(err => console.log(err));
-}
-
-export default Login;
+export default Signup;
