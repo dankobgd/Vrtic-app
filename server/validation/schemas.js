@@ -14,8 +14,6 @@ module.exports.signupSchema = Joi.object().keys({
     .required(),
 });
 
-Joi.any();
-
 module.exports.loginSchema = Joi.object().keys({
   email: Joi.string()
     .max(50)

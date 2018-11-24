@@ -90,4 +90,7 @@ const BasicForm = () => (
   />
 );
 
-export default Signup;
+export default connect(
+  null,
+  signupActions
+)(Signup);
