@@ -1,13 +1,27 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { Container, Form, Button } from 'semantic-ui-react';
+import { Grid, Container, Form, Button } from 'semantic-ui-react';
 import * as Yup from 'yup';
 
 function Login() {
   return (
     <div>
       <h1>Signup Page</h1>
-      <BasicForm />
+      <Container>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={8}>
+              <BasicForm />
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <div>
+                <button>Google</button>
+                <button>Facebook</button>
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     </div>
   );
 }
