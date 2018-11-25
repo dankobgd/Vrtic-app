@@ -23,6 +23,6 @@ export const signup = token => ({
   payload: token,
 });
 
-export const signUserUp = credentials => {
-  return dispatch => api.post('auth/signup', credentials).then(token => dispatch(signup(token)));
+export const signUserUp = formData => {
+  return dispatch => api.post('auth/signup', formData).then(token => dispatch(signup(token)));
 };

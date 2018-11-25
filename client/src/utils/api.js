@@ -1,14 +1,17 @@
 const BASE_URL = 'http://localhost:3001/api';
 
-function request(method, path, options = {}) {
+function request(method, path, body, options = {}) {
   return new Promise((resolve, reject) => {
     const adjustedPath = path[0] !== '/' ? '/' + path : path;
     const fetchURL = BASE_URL + adjustedPath;
     const timeout = 8000;
 
     const defaultHeaders = {
-      'Content-Type': 'Application/json',
+      'Content-Type': 'application/json; charset=utf-8',
       Accept: 'Application/json',
+      cache: 'no-cache',
+      mode: 'cors',
+      referrer: 'no-referrer',
     };
 
     const fetchOptions = {
@@ -18,7 +21,7 @@ function request(method, path, options = {}) {
         ...options.headers,
       },
       ...options,
-      body: method !== 'GET' ? JSON.stringify(options.body) : null,
+      body: method !== 'GET' ? JSON.stringify(body) : null,
     };
 
     const requestPromise = fetch(fetchURL, fetchOptions)
@@ -33,16 +36,16 @@ function request(method, path, options = {}) {
 }
 
 export default {
-  get: (endpoint, opts) => {
-    return request('GET', endpoint, opts);
+  get: (endpoint, body, opts) => {
+    return request('GET', endpoint, body, opts);
   },
-  post: (endpoint, opts) => {
-    return request('POST', endpoint, opts);
+  post: (endpoint, body, opts) => {
+    return request('POST', endpoint, body, opts);
   },
-  put: (endpoint, opts) => {
-    return request('PUT', endpoint, opts);
+  put: (endpoint, body, opts) => {
+    return request('PUT', endpoint, body, opts);
   },
-  del: (endpoint, opts) => {
-    return request('DELETE', endpoint, opts);
+  del: (endpoint, body, opts) => {
+    return request('DELETE', endpoint, body, opts);
   },
 };

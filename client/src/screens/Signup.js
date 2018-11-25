@@ -3,9 +3,9 @@ import { Formik } from 'formik';
 import { Grid, Container, Form, Button } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
-import signupActions from '../modules/signup';
+import * as signupActions from '../redux/auth';
 
-function Signup() {
+function Signup({ signUserUp }) {
   return (
     <div>
       <h1>Signup Page</h1>
@@ -13,7 +13,7 @@ function Signup() {
         <Grid>
           <Grid.Row>
             <Grid.Column width={8}>
-              <BasicForm />
+              <BasicForm signUserUp={signUserUp} />
             </Grid.Column>
             <Grid.Column width={8}>
               <div>
@@ -41,12 +41,12 @@ const signupSchema = Yup.object().shape({
     .required(),
 });
 
-const BasicForm = () => (
+const BasicForm = ({ signUserUp }) => (
   <Formik
     initialValues={{ email: '', password: '', confirmPassword: '' }}
     validationSchema={signupSchema}
-    onSubmit={(values, actions) => {
-      console.log('form data: ', values);
+    onSubmit={(formData, actions) => {
+      signUserUp(formData).then(data => console.log(data));
     }}
     render={({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
       <Container>
