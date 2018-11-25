@@ -9,9 +9,6 @@ function request(method, path, body, options = {}) {
     const defaultHeaders = {
       'Content-Type': 'application/json; charset=utf-8',
       Accept: 'Application/json',
-      cache: 'no-cache',
-      mode: 'cors',
-      referrer: 'no-referrer',
     };
 
     const fetchOptions = {
