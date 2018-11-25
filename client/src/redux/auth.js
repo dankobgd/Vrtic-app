@@ -50,3 +50,11 @@ export const signUserUpGoogleOauth = token => {
       localStorage.setItem('jwt', data.token);
     });
 };
+
+export const signUserUpFacebookOauth = token => {
+  return dispatch =>
+    api.post('auth/oauth/facebook', { access_token: token }).then(data => {
+      dispatch(signup(data.token));
+      localStorage.setItem('jwt', data.token);
+    });
+};

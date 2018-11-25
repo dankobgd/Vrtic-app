@@ -3,19 +3,26 @@ import { Formik } from 'formik';
 import { Grid, Container, Form, Button } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
-import * as signupActions from '../redux/auth';
+import auth, * as signupActions from '../redux/auth';
 import GoogleButton from 'react-google-login';
 import FacebookButton from 'react-facebook-login';
 import config from '../config';
 
 class Signup extends React.Component {
   googleCallback = res => {
-    this.props.signUserUpGoogleOauth(res.accessToken).then(() => {});
     console.log('google response data: ', res);
+    this.props.signUserUpGoogleOauth(res.accessToken).then(() => {});
+    if (!this.props.authError) {
+      this.props.history.push('/dashboard');
+    }
   };
 
   facebookCallback = res => {
     console.log('facebook response data: ', res);
+    this.props.signUserUpFacebookOauth(res.accessToken).then(() => {});
+    if (!this.props.authError) {
+      this.props.history.push('/dashboard');
+    }
   };
 
   render() {
@@ -73,12 +80,15 @@ const signupSchema = Yup.object().shape({
     .required(),
 });
 
-const BasicForm = ({ authError, signUserUpLocalAuth, signUserUpGoogleOauth }) => (
+const BasicForm = ({ history, authError, signUserUpLocalAuth, signUserUpGoogleOauth }) => (
   <Formik
     initialValues={{ email: '', password: '', confirmPassword: '' }}
     validationSchema={signupSchema}
     onSubmit={(formData, actions) => {
       signUserUpLocalAuth(formData).then(() => {});
+      if (!authError) {
+        history.push('/dashboard');
+      }
     }}
     render={({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
       <Container>
