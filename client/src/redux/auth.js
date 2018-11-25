@@ -1,6 +1,7 @@
 import api from '../utils/api';
 
 const SIGN_UP = 'auth/SIGN_UP';
+const SIGN_OUT = 'auth/SIGN_OUT';
 const SIGN_UP_AUTH_ERROR = 'auth/SIGN_UP_AUTH_ERROR';
 
 const initialState = {
@@ -16,6 +17,8 @@ export default (state = initialState, action = {}) => {
       return { ...state, isAuthenticated: true, jwt: action.payload, authError: '', formErrors: [] };
     case SIGN_UP_AUTH_ERROR:
       return { ...state, isAuthenticated: false, jwt: '', authError: action.payload, formErrors: [] };
+    case SIGN_OUT:
+      return { ...state, isAuthenticated: false, jwt: '', authError: '', formErrors: [] };
     default:
       return state;
   }
@@ -24,6 +27,10 @@ export default (state = initialState, action = {}) => {
 export const signup = token => ({
   type: SIGN_UP,
   payload: token,
+});
+
+export const signout = () => ({
+  type: SIGN_OUT,
 });
 
 export const signupAuthError = error => ({
@@ -57,4 +64,9 @@ export const signUserUpFacebookOauth = token => {
       dispatch(signup(data.token));
       localStorage.setItem('jwt', data.token);
     });
+};
+
+export const signUserOut = () => dispatch => {
+  dispatch(signout);
+  localStorage.removeItem('jwt');
 };

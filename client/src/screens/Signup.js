@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { Grid, Container, Form, Button } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
-import auth, * as signupActions from '../redux/auth';
+import * as authActions from '../redux/auth';
 import GoogleButton from 'react-google-login';
 import FacebookButton from 'react-facebook-login';
 import config from '../config';
@@ -142,5 +142,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  signupActions
+  authActions
 )(Signup);
