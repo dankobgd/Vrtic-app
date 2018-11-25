@@ -46,7 +46,7 @@ const BasicForm = ({ signUserUp }) => (
     initialValues={{ email: '', password: '', confirmPassword: '' }}
     validationSchema={signupSchema}
     onSubmit={(formData, actions) => {
-      signUserUp(formData).then(data => console.log(data));
+      signUserUp(formData).then(() => {});
     }}
     render={({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
       <Container>
