@@ -43,19 +43,15 @@ class Signup extends React.Component {
                       buttonText={'Sign up with google'}
                       onSuccess={this.googleCallback}
                       onFailure={this.googleCallback}
-                    >
-                      Google
-                    </GoogleButton>
+                    />
                   </div>
                   <div>
                     <FacebookButton
                       appId={config.facebook.appId}
                       textButton={'Login With Facebook'}
-                      fields='name, email, picture'
+                      fields={'name, email, picture'}
                       callback={this.facebookCallback}
-                    >
-                      Facebook
-                    </FacebookButton>
+                    />
                   </div>
                 </div>
               </Grid.Column>
