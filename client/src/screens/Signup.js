@@ -4,28 +4,60 @@ import { Grid, Container, Form, Button } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import * as signupActions from '../redux/auth';
+import GoogleButton from 'react-google-login';
+import FacebookButton from 'react-facebook-login';
+import config from '../config';
 
-function Signup({ signUserUp }) {
-  return (
-    <div>
-      <h1>Signup Page</h1>
-      <Container>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={8}>
-              <BasicForm signUserUp={signUserUp} />
-            </Grid.Column>
-            <Grid.Column width={8}>
-              <div>
-                <button>Google</button>
-                <button>Facebook</button>
-              </div>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Container>
-    </div>
-  );
+class Signup extends React.Component {
+  googleCallback = res => {
+    this.props.signUserUpGoogleOauth(res.accessToken).then(() => {});
+    console.log('google response data: ', res);
+  };
+
+  facebookCallback = res => {
+    console.log('facebook response data: ', res);
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>Signup Page</h1>
+        <Container>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={8}>
+                <BasicForm {...this.props} />
+              </Grid.Column>
+              <Grid.Column width={8}>
+                <div>
+                  <div>
+                    <GoogleButton
+                      clientId={config.google.clientId}
+                      buttonText={'Sign up with google'}
+                      onSuccess={this.googleCallback}
+                      onFailure={this.googleCallback}
+                    >
+                      Google
+                    </GoogleButton>
+                  </div>
+                  <div>
+                    <FacebookButton
+                      appId={config.facebook.appId}
+                      textButton={'Login With Facebook'}
+                      fields='name, email, picture'
+                      callback={this.facebookCallback}
+                    >
+                      Facebook
+                    </FacebookButton>
+                  </div>
+                </div>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Container>
+      </div>
+    );
+  }
 }
 
 const signupSchema = Yup.object().shape({
@@ -41,16 +73,18 @@ const signupSchema = Yup.object().shape({
     .required(),
 });
 
-const BasicForm = ({ signUserUp }) => (
+const BasicForm = ({ authError, signUserUpLocalAuth, signUserUpGoogleOauth }) => (
   <Formik
     initialValues={{ email: '', password: '', confirmPassword: '' }}
     validationSchema={signupSchema}
     onSubmit={(formData, actions) => {
-      signUserUp(formData).then(() => {});
+      signUserUpLocalAuth(formData).then(() => {});
     }}
     render={({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
       <Container>
         <Form onSubmit={handleSubmit}>
+          {authError ? <div style={{ color: 'red' }}>{authError}</div> : null}
+
           <Form.Input
             type='text'
             placeholder='Email'
@@ -90,7 +124,13 @@ const BasicForm = ({ signUserUp }) => (
   />
 );
 
+function mapStateToProps(state) {
+  return {
+    authError: state.user.authError,
+  };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   signupActions
 )(Signup);

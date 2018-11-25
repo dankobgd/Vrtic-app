@@ -1,9 +1,9 @@
-const BASE_URL = 'http://localhost:3001/api';
+import config from '../config';
 
 function request(method, path, body, options = {}) {
   return new Promise((resolve, reject) => {
     const adjustedPath = path[0] !== '/' ? '/' + path : path;
-    const fetchURL = BASE_URL + adjustedPath;
+    const fetchURL = config.BASE_URL + adjustedPath;
     const timeout = 8000;
 
     const defaultHeaders = {

@@ -1,7 +1,7 @@
 import api from '../utils/api';
 
-const SIGN_UP = 'signup/SIGN_UP';
-const SIGN_UP_AUTH_ERROR = 'signup/SIGN_UP_AUTH_ERROR';
+const SIGN_UP = 'auth/SIGN_UP';
+const SIGN_UP_AUTH_ERROR = 'auth/SIGN_UP_AUTH_ERROR';
 
 const initialState = {
   isAuthenticated: false,
@@ -31,7 +31,7 @@ export const signupAuthError = error => ({
   payload: error,
 });
 
-export const signUserUp = formData => {
+export const signUserUpLocalAuth = formData => {
   return dispatch =>
     api.post('auth/signup', formData).then(data => {
       if (data.token) {
@@ -40,5 +40,13 @@ export const signUserUp = formData => {
       } else if (data.error) {
         dispatch(signupAuthError(data.error));
       }
+    });
+};
+
+export const signUserUpGoogleOauth = token => {
+  return dispatch =>
+    api.post('auth/oauth/google', { access_token: token }).then(data => {
+      dispatch(signup(data.token));
+      localStorage.setItem('jwt', data.token);
     });
 };
