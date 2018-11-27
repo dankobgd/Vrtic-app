@@ -9,7 +9,8 @@ class Navigation extends React.Component {
 
   handleItemClick = (e, { name }) => {
     if (name === 'Logout') {
-      this.props.signUserOut().then(() => {});
+      this.props.signUserOut();
+      this.props.history.push('/');
     }
     this.setState({ activeItem: name });
   };

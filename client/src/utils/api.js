@@ -1,48 +1,54 @@
+import axios from 'axios';
 import config from '../config';
 
-function request(method, path, body, options = {}) {
+const instance = axios.create({
+  baseURL: config.BASE_URL,
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+    Accept: 'application/json',
+  },
+  timeout: 6000,
+});
+
+function request(method, url, data) {
   return new Promise((resolve, reject) => {
-    const adjustedPath = path[0] !== '/' ? '/' + path : path;
-    const fetchURL = config.BASE_URL + adjustedPath;
-    const timeout = 8000;
-
-    const defaultHeaders = {
-      'Content-Type': 'application/json; charset=utf-8',
-      Accept: 'Application/json',
-    };
-
-    const fetchOptions = {
-      method,
-      headers: {
-        ...defaultHeaders,
-        ...options.headers,
-      },
-      ...options,
-      body: method !== 'GET' ? JSON.stringify(body) : null,
-    };
-
-    const requestPromise = fetch(fetchURL, fetchOptions)
-      .then(response => response.json())
-      .then(data => resolve(data))
-      .catch(err => reject(err));
-
-    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('request timeout')), timeout));
-
-    return Promise.race([requestPromise, timeoutPromise]);
+    (() => {
+      if (method === 'GET') {
+        return instance.request({
+          url,
+          method,
+          params: data,
+          headers: {},
+        });
+      } else {
+        return instance.request({
+          url,
+          method,
+          data,
+          headers: {},
+        });
+      }
+    })()
+      .then(res => {
+        resolve(res.data);
+      })
+      .catch(err => {
+        reject(err.response);
+      });
   });
 }
 
 export default {
-  get: (endpoint, body, opts) => {
-    return request('GET', endpoint, body, opts);
+  get: (endpoint, data) => {
+    return request('GET', endpoint, data);
   },
-  post: (endpoint, body, opts) => {
-    return request('POST', endpoint, body, opts);
+  post: (endpoint, data) => {
+    return request('POST', endpoint, data);
   },
-  put: (endpoint, body, opts) => {
-    return request('PUT', endpoint, body, opts);
+  put: (endpoint, data) => {
+    return request('PUT', endpoint, data);
   },
-  del: (endpoint, body, opts) => {
-    return request('DELETE', endpoint, body, opts);
+  del: (endpoint, data) => {
+    return request('DELETE', endpoint, data);
   },
 };

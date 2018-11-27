@@ -1,14 +1,14 @@
 import React from 'react';
-import Navigation from './components/navigation/Navigation';
-import '../node_modules/semantic-ui-css/semantic.min.css';
+import Navigation from '../components/navigation/Navigation';
+import '../../node_modules/semantic-ui-css/semantic.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Home from './screens/Home';
-import Dashboard from './screens/Dashboard';
-import Signup from './screens/Signup';
-import Login from './screens/Login';
+import Home from '../screens/Home';
+import Dashboard from '../screens/Dashboard';
+import Signup from '../screens/Signup';
+import Login from '../screens/Login';
 import { Provider } from 'react-redux';
-import store from './store';
+import store from '../store/store';
 
 function App() {
   return (

@@ -11,6 +11,7 @@ const initialState = {
   user: {
     jwt: jwt,
     isAuthenticated: jwt ? true : false,
+    authError: null,
   },
 };
 
