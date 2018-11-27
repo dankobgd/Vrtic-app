@@ -1,4 +1,5 @@
 import api from '../utils/api';
+import setAuthorizationHeader from '../utils/setAuthorizationHeader';
 
 const SIGN_UP = 'auth/SIGN_UP';
 const SIGN_OUT = 'auth/SIGN_OUT';
@@ -70,6 +71,7 @@ export const signUserUpLocalAuth = formData => {
     try {
       const data = await api.post('auth/signup', formData);
       dispatch(signup(data.token));
+      setAuthorizationHeader(data.token);
       localStorage.setItem('jwt', data.token);
     } catch (err) {
       if (err.data.details) {
@@ -85,6 +87,7 @@ export const logUserInLocalAuth = formData => {
     try {
       const data = await api.post('auth/login', formData);
       dispatch(signup(data.token));
+      setAuthorizationHeader(data.token);
       localStorage.setItem('jwt', data.token);
     } catch (err) {
       if (err.data.details) {
@@ -102,6 +105,7 @@ export const signUserUpGoogleOauth = token => {
       console.log('google oauth data: ', data);
       console.log('google oauth token: ', data.token);
       dispatch(signup(data.token));
+      setAuthorizationHeader(data.token);
       localStorage.setItem('jwt', data.token);
     } catch (err) {
       console.log('google oauth err: ', err);
@@ -117,6 +121,7 @@ export const signUserUpFacebookOauth = token => {
       dispatch(signup(data.token));
       console.log('facebook oauth data: ', data);
       console.log('facebook oauth token: ', data.token);
+      setAuthorizationHeader(data.token);
       localStorage.setItem('jwt', data.token);
     } catch (err) {
       console.log('facebook oauth err: ', err);
@@ -127,5 +132,6 @@ export const signUserUpFacebookOauth = token => {
 
 export const signUserOut = () => dispatch => {
   dispatch(signout);
+  setAuthorizationHeader();
   localStorage.removeItem('jwt');
 };
