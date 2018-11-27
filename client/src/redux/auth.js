@@ -3,6 +3,7 @@ import api from '../utils/api';
 const SIGN_UP = 'auth/SIGN_UP';
 const SIGN_OUT = 'auth/SIGN_OUT';
 const SIGN_UP_AUTH_ERROR = 'auth/SIGN_UP_AUTH_ERROR';
+const LOG_IN = 'auth/LOG_IN';
 
 const initialState = {
   isAuthenticated: false,
@@ -13,6 +14,13 @@ const initialState = {
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case SIGN_UP:
+      return {
+        ...state,
+        isAuthenticated: true,
+        jwt: action.payload,
+        authError: null,
+      };
+    case LOG_IN:
       return {
         ...state,
         isAuthenticated: true,
@@ -47,6 +55,11 @@ export const signout = () => ({
   type: SIGN_OUT,
 });
 
+export const login = token => ({
+  type: LOG_IN,
+  payload: token,
+});
+
 export const signupAuthError = error => ({
   type: SIGN_UP_AUTH_ERROR,
   payload: error,
@@ -56,6 +69,21 @@ export const signUserUpLocalAuth = formData => {
   return async dispatch => {
     try {
       const data = await api.post('auth/signup', formData);
+      dispatch(signup(data.token));
+      localStorage.setItem('jwt', data.token);
+    } catch (err) {
+      if (err.data.details) {
+        return dispatch(signupAuthError(err.data.details));
+      }
+      dispatch(signupAuthError(err.data));
+    }
+  };
+};
+
+export const logUserInLocalAuth = formData => {
+  return async dispatch => {
+    try {
+      const data = await api.post('auth/login', formData);
       dispatch(signup(data.token));
       localStorage.setItem('jwt', data.token);
     } catch (err) {

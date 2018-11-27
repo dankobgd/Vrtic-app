@@ -48,7 +48,7 @@ class Signup extends React.Component {
                   <div>
                     <FacebookButton
                       appId={config.facebook.appId}
-                      textButton={'Login With Facebook'}
+                      textButton={'Sign up With Facebook'}
                       fields={'name, email, picture'}
                       callback={this.facebookCallback}
                     />
