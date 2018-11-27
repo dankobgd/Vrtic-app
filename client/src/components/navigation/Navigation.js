@@ -43,6 +43,16 @@ class Navigation extends React.Component {
             >
               Login
             </Menu.Item>
+
+            <Menu.Item
+              as={Link}
+              to='/dashboard'
+              name='Dashboard'
+              active={activeItem === 'Dashboard'}
+              onClick={this.handleItemClick}
+            >
+              Dashboard
+            </Menu.Item>
           </>
         ) : (
           <>
@@ -58,6 +68,17 @@ class Navigation extends React.Component {
             >
               test404
             </Menu.Item>
+
+            <Menu.Item
+              as={Link}
+              to='/dashboard'
+              name='Dashboard'
+              active={activeItem === 'Dashboard'}
+              onClick={this.handleItemClick}
+            >
+              Dashboard
+            </Menu.Item>
+
             <Menu.Item as={Link} to='/' name='Logout' active={activeItem === 'Logout'} onClick={this.handleItemClick}>
               Logout
             </Menu.Item>

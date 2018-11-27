@@ -9,6 +9,7 @@ import Signup from '../screens/Signup';
 import Login from '../screens/Login';
 import { Provider } from 'react-redux';
 import store from '../store/store';
+import AuthGuard from '../components/AuthGuard';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Navigation />
             <Switch>
               <Route exact path='/' component={Home} />
-              <Route exact path='/Dashboard' component={Dashboard} />
+              <Route exact path='/Dashboard' component={AuthGuard(Dashboard)} />
               <Route exact path='/signup' component={Signup} />
               <Route exact path='/login' component={Login} />
               <Route render={() => <h1>PAGE NOT FOUND 404</h1>} />
