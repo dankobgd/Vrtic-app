@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -88,6 +89,14 @@ class Navigation extends React.Component {
     );
   }
 }
+
+Navigation.propTypes = {
+  signUserOut: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }),
+};
 
 function mapStateToProps(state) {
   return {

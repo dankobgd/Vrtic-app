@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 export default function(Original) {
@@ -22,12 +23,18 @@ export default function(Original) {
     }
   }
 
-  function mapStateToProps(state) {
-    return {
-      isAuthenticated: state.user.isAuthenticated,
-      jwt: state.user.jwt,
-    };
-  }
+  AuthGuard.propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired,
+    jwt: PropTypes.string,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }),
+  };
+
+  const mapStateToProps = state => ({
+    isAuthenticated: state.user.isAuthenticated,
+    jwt: state.user.jwt,
+  });
 
   return connect(mapStateToProps)(AuthGuard);
 }

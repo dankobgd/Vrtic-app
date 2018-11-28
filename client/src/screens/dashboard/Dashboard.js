@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as dashboardActions from '../redux/dashboard';
+import * as dashboardActions from '../../redux/dashboard';
 
 class Dashboard extends Component {
   componentDidMount = () => {
@@ -10,17 +11,20 @@ class Dashboard extends Component {
   render() {
     return (
       <div style={{ color: 'darkred' }}>
-        <h2>{this.props.secret.msg}</h2>
+        <h2>{this.props.secret}</h2>
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    secret: state.dashboard.secret,
-  };
-}
+Dashboard.propTypes = {
+  getSecretResource: PropTypes.func.isRequired,
+  secret: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = state => ({
+  secret: state.dashboard.secret,
+});
 
 export default connect(
   mapStateToProps,

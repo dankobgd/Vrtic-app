@@ -24,7 +24,7 @@ export const getSecretResource = () => {
   return async dispatch => {
     try {
       const res = await api.get('/secret');
-      dispatch(getSecret(res));
+      dispatch(getSecret(res.msg));
     } catch (err) {}
   };
 };
