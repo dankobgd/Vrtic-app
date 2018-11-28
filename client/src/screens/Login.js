@@ -11,7 +11,7 @@ import config from '../config';
 class Login extends React.Component {
   googleCallback = async res => {
     console.log('Google res: ', res);
-    await this.props.signUserUpGoogleOauth(res.accessToken); // rename this fn later...
+    await this.props.signUserUpGoogleOauth(res.accessToken);
     if (!this.props.authError) {
       this.props.history.push('/dashboard');
     }
@@ -19,7 +19,7 @@ class Login extends React.Component {
 
   facebookCallback = async res => {
     console.log('Facebook res: ', res);
-    await this.props.signUserUpFacebookOauth(res.accessToken); // rename this fn later...
+    await this.props.signUserUpFacebookOauth(res.accessToken);
     if (!this.props.authError) {
       this.props.history.push('/dashboard');
     }
@@ -80,8 +80,6 @@ const LoginForm = props => {
       validationSchema={loginSchema}
       onSubmit={(formData, actions) => {
         props.logUserInLocalAuth(formData);
-
-        console.log('props inside onSubmit:  ', props.authError);
 
         if (Array.isArray(props.authError)) {
           const serverErrors = {};

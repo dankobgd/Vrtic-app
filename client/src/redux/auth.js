@@ -102,13 +102,11 @@ export const signUserUpGoogleOauth = token => {
   return async dispatch => {
     try {
       const data = await api.post('auth/oauth/google', { access_token: token });
-      console.log('google oauth data: ', data);
-      console.log('google oauth token: ', data.token);
+
       dispatch(signup(data.token));
       setAuthorizationHeader(data.token);
       localStorage.setItem('jwt', data.token);
     } catch (err) {
-      console.log('google oauth err: ', err);
       dispatch(signupAuthError(err));
     }
   };
@@ -119,12 +117,9 @@ export const signUserUpFacebookOauth = token => {
     try {
       const data = await api.post('auth/oauth/facebook', { access_token: token });
       dispatch(signup(data.token));
-      console.log('facebook oauth data: ', data);
-      console.log('facebook oauth token: ', data.token);
       setAuthorizationHeader(data.token);
       localStorage.setItem('jwt', data.token);
     } catch (err) {
-      console.log('facebook oauth err: ', err);
       dispatch(signupAuthError(err));
     }
   };

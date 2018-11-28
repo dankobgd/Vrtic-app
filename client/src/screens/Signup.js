@@ -90,8 +90,6 @@ const SignupForm = props => {
       onSubmit={(formData, actions) => {
         props.signUserUpLocalAuth(formData);
 
-        console.log('props inside onSubmit:  ', props.authError);
-
         if (Array.isArray(props.authError)) {
           const serverErrors = {};
           props.authError.forEach(err => {

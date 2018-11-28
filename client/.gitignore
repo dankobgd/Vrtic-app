@@ -24,3 +24,6 @@ yarn-error.log*
 
 # config folder
 src/config
+
+# my api testing file
+.http
