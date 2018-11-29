@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import LoginView from './LoginView';
 import * as LoginActions from '../../redux/auth';
+import * as flashMessagesActions from '../../redux/flashMessage';
 
 class LoginContainer extends Component {
   googleResponse = async res => {
@@ -27,17 +28,26 @@ class LoginContainer extends Component {
 LoginContainer.propTypes = {
   signUserUpGoogleOauth: PropTypes.func.isRequired,
   signUserUpFacebookOauth: PropTypes.func.isRequired,
-  authError: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  authError: PropTypes.object,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }),
+  setFlashMessage: PropTypes.func.isRequired,
+  removeFlashMessage: PropTypes.func.isRequired,
+  flashMessages: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
   authError: state.user.authError,
+  flashMessages: state.flashMessages,
 });
+
+const mapDispatchToProps = {
+  ...LoginActions,
+  ...flashMessagesActions,
+};
 
 export default connect(
   mapStateToProps,
-  LoginActions
+  mapDispatchToProps
 )(LoginContainer);

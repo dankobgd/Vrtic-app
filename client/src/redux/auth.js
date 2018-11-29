@@ -86,7 +86,7 @@ export const logUserInLocalAuth = formData => {
   return async dispatch => {
     try {
       const data = await api.post('auth/login', formData);
-      dispatch(signup(data.token));
+      dispatch(login(data.token));
       setAuthorizationHeader(data.token);
       localStorage.setItem('jwt', data.token);
     } catch (err) {

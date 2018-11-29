@@ -2,11 +2,11 @@ import api from '../utils/api';
 
 const DASHBOARD_GET_DATA = 'dashboard/DASHBOARD_GET_DATA';
 
-const DEFAULT_STATE = {
+const initialState = {
   secret: '',
 };
 
-export default (state = DEFAULT_STATE, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case DASHBOARD_GET_DATA:
       return { ...state, secret: action.payload };

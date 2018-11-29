@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SignupView from './SignupView';
 import * as signupActions from '../../redux/auth';
+import * as flashMessagesActions from '../../redux/flashMessage';
 
 class SignupContainer extends Component {
   googleResponse = async res => {
@@ -27,17 +28,26 @@ class SignupContainer extends Component {
 SignupContainer.propTypes = {
   signUserUpGoogleOauth: PropTypes.func.isRequired,
   signUserUpFacebookOauth: PropTypes.func.isRequired,
-  authError: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  authError: PropTypes.object,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }),
+  setFlashMessage: PropTypes.func.isRequired,
+  removeFlashMessage: PropTypes.func.isRequired,
+  flashMessages: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
   authError: state.user.authError,
+  flashMessages: state.flashMessages,
 });
+
+const mapDispatchToProps = {
+  ...signupActions,
+  ...flashMessagesActions,
+};
 
 export default connect(
   mapStateToProps,
-  signupActions
+  mapDispatchToProps
 )(SignupContainer);

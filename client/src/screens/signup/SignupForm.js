@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Container, Form, Button } from 'semantic-ui-react';
 import signupSchema from './validation';
+import FlashMessagesList from '../../components/flash/FlashMessagesList';
 
 function SignupForm(props) {
   return (
@@ -11,6 +12,8 @@ function SignupForm(props) {
       validationSchema={signupSchema}
       onSubmit={(formData, actions) => {
         props.signUserUpLocalAuth(formData);
+        props.setFlashMessage({ type: 'success', text: 'You successfuly signed up' });
+
         if (props.authError !== null && props.authError !== undefined) {
           actions.setSubmitting(false);
           props.history.push('/dashboard');
@@ -18,9 +21,11 @@ function SignupForm(props) {
       }}
       render={({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
         <Container>
-          <Form onSubmit={handleSubmit}>
-            {props.authError ? <div style={{ color: 'red' }}>{props.authError.error}</div> : null}
+          {props.authError ? <div style={{ color: 'red' }}>{props.authError.error}</div> : null}
 
+          <FlashMessagesList />
+
+          <Form onSubmit={handleSubmit}>
             <Form.Input
               type='text'
               placeholder='Email'
@@ -63,10 +68,13 @@ function SignupForm(props) {
 
 SignupForm.propTypes = {
   logUserInLocalAuth: PropTypes.func.isRequired,
-  authError: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  authError: PropTypes.object,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }),
+  setFlashMessage: PropTypes.func.isRequired,
+  removeFlashMessage: PropTypes.func.isRequired,
+  flashMessages: PropTypes.array,
 };
 
 export default SignupForm;

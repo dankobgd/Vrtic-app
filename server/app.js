@@ -41,7 +41,7 @@ fs.readdirSync(routesDir).forEach(file => {
 app.use(middleware.forward404);
 app.use(middleware.errorHandler);
 
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log(`DB sync`);
 });
 
