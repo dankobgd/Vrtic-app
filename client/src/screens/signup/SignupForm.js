@@ -11,13 +11,22 @@ function SignupForm(props) {
       initialValues={{ email: '', password: '', confirmPassword: '' }}
       validationSchema={signupSchema}
       onSubmit={(formData, actions) => {
-        props.signUserUpLocalAuth(formData);
-        props.setFlashMessage({ type: 'success', text: 'You successfuly signed up' });
-
-        if (props.authError !== null && props.authError !== undefined) {
-          actions.setSubmitting(false);
-          props.history.push('/dashboard');
-        }
+        props.signUserUpLocalAuth(formData).then(data => {
+          if (data !== null && data !== undefined) {
+            const errors = {};
+            if (data.payload) {
+              data.payload.forEach(errObj => {
+                errors[errObj.context.label] = errObj.message;
+                actions.setErrors(errors);
+              });
+            } else {
+              props.history.push('/dashboard');
+            }
+            actions.setSubmitting(false);
+          } else {
+            props.setFlashMessage({ type: 'success', text: 'You successfuly signed up' });
+          }
+        });
       }}
       render={({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
         <Container>
@@ -68,7 +77,7 @@ function SignupForm(props) {
 
 SignupForm.propTypes = {
   logUserInLocalAuth: PropTypes.func.isRequired,
-  authError: PropTypes.object,
+  authError: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }),

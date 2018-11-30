@@ -28,7 +28,7 @@ class LoginContainer extends Component {
 LoginContainer.propTypes = {
   signUserUpGoogleOauth: PropTypes.func.isRequired,
   signUserUpFacebookOauth: PropTypes.func.isRequired,
-  authError: PropTypes.object,
+  authError: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }),

@@ -11,13 +11,22 @@ function LoginForm(props) {
       initialValues={{ email: '', password: '' }}
       validationSchema={loginSchema}
       onSubmit={(formData, actions) => {
-        props.logUserInLocalAuth(formData);
-        props.setFlashMessage({ type: 'success', text: 'You successfuly logged in' });
-
-        if (props.authError !== null && props.authError !== undefined) {
-          actions.setSubmitting(false);
-          props.history.push('/dashboard');
-        }
+        props.logUserInLocalAuth(formData).then(data => {
+          if (data !== null && data !== undefined) {
+            const errors = {};
+            if (data.payload) {
+              data.payload.forEach(errObj => {
+                errors[errObj.context.label] = errObj.message;
+                actions.setErrors(errors);
+              });
+            } else {
+              props.history.push('/dashboard');
+            }
+            actions.setSubmitting(false);
+          } else {
+            props.setFlashMessage({ type: 'success', text: 'You successfuly Logged in' });
+          }
+        });
       }}
       render={({ values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit }) => (
         <Container>
@@ -58,7 +67,7 @@ function LoginForm(props) {
 
 LoginForm.propTypes = {
   logUserInLocalAuth: PropTypes.func.isRequired,
-  authError: PropTypes.object,
+  authError: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }),

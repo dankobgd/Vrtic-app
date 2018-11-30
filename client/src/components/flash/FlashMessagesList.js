@@ -24,7 +24,7 @@ class FlashMessagesList extends Component {
 }
 
 FlashMessagesList.propTypes = {
-  authError: PropTypes.object,
+  authError: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   flashMessages: PropTypes.array.isRequired,
   removeFlashMessage: PropTypes.func.isRequired,
 };
