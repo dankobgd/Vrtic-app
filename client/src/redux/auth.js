@@ -11,6 +11,7 @@ const initialState = {
   isAuthenticated: false,
   jwt: '',
   authError: null,
+  isAccountConfirmed: false,
 };
 
 export default (state = initialState, action = {}) => {
@@ -42,6 +43,14 @@ export default (state = initialState, action = {}) => {
         isAuthenticated: false,
         jwt: '',
         authError: action.payload,
+      };
+    case EMAIL_CONFIRMATION_REQUEST:
+      return {
+        ...state,
+        isAuthenticated: true,
+        jwt: action.payload,
+        authError: null,
+        isAccountConfirmed: true,
       };
     default:
       return state;
@@ -139,9 +148,7 @@ export const signUserOut = () => dispatch => {
 export const confirmEmail = token => {
   return async dispatch => {
     const data = await api.post('auth/confirmation', { token });
-    console.log(data.token);
-
-    dispatch(login(data.token));
+    dispatch(confirm(data.token));
     setAuthorizationHeader(data.token);
     localStorage.setItem('jwt', data.token);
   };
