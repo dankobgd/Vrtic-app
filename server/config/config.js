@@ -1,8 +1,18 @@
 const path = require('path');
 const { Op } = require('sequelize');
 
+require('dotenv').config();
+
 module.exports = {
   port: 3001,
+  email: {
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+    from: process.env.EMAIL_FROM,
+    to: process.env.EMAIL_TO,
+  },
   db: {
     database: process.env.DB_NAME || 'vrtic-database',
     user: process.env.DB_USER || null,

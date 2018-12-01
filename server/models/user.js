@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
     facebookID: {
       type: DataTypes.STRING,
     },
+    confirmedAccount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    confirmationToken: {
+      type: DataTypes.STRING,
+      defaultValue: '',
+    },
   });
 
   /* eslint no-param-reassign: 0 */
