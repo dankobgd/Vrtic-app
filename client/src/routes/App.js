@@ -7,6 +7,7 @@ import Home from '../screens/home/Home';
 import Dashboard from '../screens/dashboard/Dashboard';
 import Signup from '../screens/signup/SignupContainer';
 import Login from '../screens/login/LoginContainer';
+import ConfirmationPage from '../screens/ConfirmationPage';
 import { Provider } from 'react-redux';
 import store from '../store/store';
 import AuthGuard from '../components/AuthGuard';
@@ -20,6 +21,7 @@ function App() {
             <Navigation />
             <Switch>
               <Route exact path='/' component={Home} />
+              <Route exact path='/confirmation/:confirmationToken' component={ConfirmationPage} />
               <Route exact path='/Dashboard' component={AuthGuard(Dashboard)} />
               <Route exact path='/signup' component={Signup} />
               <Route exact path='/login' component={Login} />

@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     facebookID: {
       type: DataTypes.STRING,
     },
-    confirmedAccount: {
+    isAccountConfirmed: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   /* eslint no-param-reassign: 0 */
-  User.hook('beforeCreate', (user, options) => {
+  User.addHook('beforeCreate', (user, options) => {
     if (user.auth_method === 'local') {
       return bcrypt
         .hash(user.password, 10)

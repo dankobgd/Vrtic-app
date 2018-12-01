@@ -5,6 +5,7 @@ const SIGN_UP = 'auth/SIGN_UP';
 const SIGN_OUT = 'auth/SIGN_OUT';
 const SIGN_UP_AUTH_ERROR = 'auth/SIGN_UP_AUTH_ERROR';
 const LOG_IN = 'auth/LOG_IN';
+const EMAIL_CONFIRMATION_REQUEST = 'auth/EMAIL_CONFIRMATION_REQUEST';
 
 const initialState = {
   isAuthenticated: false,
@@ -66,6 +67,11 @@ export const signupAuthError = error => ({
   payload: error,
 });
 
+export const confirm = token => ({
+  type: EMAIL_CONFIRMATION_REQUEST,
+  payload: token,
+});
+
 export const signUserUpLocalAuth = formData => {
   return async dispatch => {
     try {
@@ -102,7 +108,6 @@ export const signUserUpGoogleOauth = token => {
   return async dispatch => {
     try {
       const data = await api.post('auth/oauth/google', { access_token: token });
-
       dispatch(signup(data.token));
       setAuthorizationHeader(data.token);
       localStorage.setItem('jwt', data.token);
@@ -129,4 +134,15 @@ export const signUserOut = () => dispatch => {
   dispatch(signout);
   setAuthorizationHeader();
   localStorage.removeItem('jwt');
+};
+
+export const confirmEmail = token => {
+  return async dispatch => {
+    const data = await api.post('auth/confirmation', { token });
+    console.log(data.token);
+
+    dispatch(login(data.token));
+    setAuthorizationHeader(data.token);
+    localStorage.setItem('jwt', data.token);
+  };
 };

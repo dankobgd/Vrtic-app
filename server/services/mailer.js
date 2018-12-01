@@ -26,12 +26,12 @@ module.exports.sendConfirmationEmail = function(toAddress, token) {
     text: 'Welcome to app',
     html: `
     <p>Welcome to vrtic-app, please confirm your email by clicking the link bellow</p>
-    <a>http://localhost:3000/api/confirmation/${token}</a>
+    <a>http://localhost:3000/confirmation/${token}</a>
     `,
   };
 
   transport.sendMail(emailOpts, (err, info) => {
-    if (err) return console.log('transport.send.email error: ', err);
-    console.log('success info: ', info);
+    if (err) return console.log('Send email error: ', err);
+    console.log('Success email ID: ', info.messageId);
   });
 };
