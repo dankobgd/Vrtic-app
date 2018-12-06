@@ -27,7 +27,14 @@ fs.readdirSync(routesDir).forEach(file => {
   const route = `${file.slice(0, -3)}`;
   let endpoint;
 
-  if (route === 'signup' || route === 'login' || route === 'confirmation') {
+  if (
+    route === 'signup' ||
+    route === 'login' ||
+    route === 'confirmation' ||
+    route === 'forgotPassword' ||
+    route === 'resetToken' ||
+    route === 'resetPassword'
+  ) {
     endpoint = `/api/auth/${route}`;
   } else if (route === 'google' || route === 'facebook') {
     endpoint = `/api/auth/oauth/${route}`;

@@ -11,6 +11,8 @@ import ConfirmationPage from '../screens/ConfirmationPage';
 import { Provider } from 'react-redux';
 import store from '../store/store';
 import AuthGuard from '../components/AuthGuard';
+import ForgotPassword from '../screens/ForgotPassword';
+import ResetPassword from '../screens/ResetPassword';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
             <Navigation />
             <Switch>
               <Route exact path='/' component={Home} />
+              <Route exact path='/forgotPassword' component={ForgotPassword} />
+              <Route exact path='/resetPassword/:resetToken' component={ResetPassword} />
               <Route exact path='/confirmation/:confirmationToken' component={ConfirmationPage} />
               <Route exact path='/Dashboard' component={AuthGuard(Dashboard)} />
               <Route exact path='/signup' component={Signup} />

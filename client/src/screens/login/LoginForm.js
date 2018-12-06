@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { Container, Form, Button } from 'semantic-ui-react';
 import loginSchema from './validation';
 import FlashMessagesList from '../../components/flash/FlashMessagesList';
+import { Link } from 'react-router-dom';
 
 function LoginForm(props) {
   return (
@@ -58,6 +59,8 @@ function LoginForm(props) {
             <Button primary type='submit' onSubmit={handleSubmit} disabled={isSubmitting}>
               Submit
             </Button>
+
+            <Link to='/forgotPassword'>forgot password?</Link>
           </Form>
         </Container>
       )}

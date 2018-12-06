@@ -153,3 +153,25 @@ export const confirmEmail = token => {
     localStorage.setItem('jwt', data.token);
   };
 };
+
+export const forgotPasswordRequest = ({ email }) => {
+  return async dispatch => {
+    await api.post('auth/forgotPassword', { email });
+  };
+};
+
+export const validateResetTokenRequest = token => {
+  return async dispatch => {
+    await api.post('auth/resetToken', { token });
+  };
+};
+
+export const resetPasswordRequest = data => {
+  return async dispatch => {
+    await api.post('auth/resetPassword', {
+      token: data.token,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+    });
+  };
+};
