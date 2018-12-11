@@ -3,18 +3,17 @@ import thunk from 'redux-thunk';
 import rootReducer from './rootReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-const reduxMiddleware = [thunk];
-
 const jwt = localStorage.getItem('jwt');
 
 const initialState = {
   user: {
-    jwt: jwt,
-    isAuthenticated: jwt ? true : false,
+    jwt,
+    isAuthenticated: Boolean(jwt),
     authError: null,
   },
 };
 
-const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...reduxMiddleware)));
+const middlware = [thunk];
+const store = createStore(rootReducer, initialState, composeWithDevTools(applyMiddleware(...middlware)));
 
 export default store;

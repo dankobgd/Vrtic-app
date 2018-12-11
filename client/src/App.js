@@ -1,18 +1,29 @@
 import React from 'react';
-import Navigation from '../components/navigation/Navigation';
-import '../../node_modules/semantic-ui-css/semantic.min.css';
+import Navigation from './components/navigation/Navigation';
+import '../node_modules/semantic-ui-css/semantic.min.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Home from '../screens/home/Home';
-import Dashboard from '../screens/dashboard/Dashboard';
-import Signup from '../screens/signup/SignupContainer';
-import Login from '../screens/login/LoginContainer';
-import ConfirmationPage from '../screens/ConfirmationPage';
+import Home from './screens/home/Home';
+import Dashboard from './screens/dashboard/Dashboard';
+import Signup from './screens/signup/SignupContainer';
+import Login from './screens/login/LoginContainer';
+import ConfirmationPage from './screens/ConfirmationPage';
 import { Provider } from 'react-redux';
-import store from '../store/store';
-import AuthGuard from '../components/AuthGuard';
-import ForgotPassword from '../screens/ForgotPassword';
-import ResetPassword from '../screens/ResetPassword';
+import store from './store/store';
+import AuthGuard from './components/AuthGuard';
+import ForgotPassword from './screens/ForgotPassword';
+import ResetPassword from './screens/ResetPassword';
+import * as authActions from './redux/auth';
+import setAuthorizationHeader from './utils/setAuthorizationHeader';
+
+(function checkForToken() {
+  const jwt = localStorage.getItem('jwt');
+
+  if (jwt) {
+    store.dispatch(authActions.login);
+    setAuthorizationHeader(jwt);
+  }
+})();
 
 function App() {
   return (
