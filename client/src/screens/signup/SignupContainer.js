@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import SignupView from './SignupView';
+import SignupForm from './SignupForm';
 import * as signupActions from '../../redux/auth';
 import * as flashMessagesActions from '../../redux/flashMessage';
 
@@ -21,7 +21,7 @@ class SignupContainer extends Component {
   };
 
   render() {
-    return <SignupView {...this.props} facebookResponse={this.facebookResponse} googleResponse={this.googleResponse} />;
+    return <SignupForm {...this.props} facebookResponse={this.facebookResponse} googleResponse={this.googleResponse} />;
   }
 }
 

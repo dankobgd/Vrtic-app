@@ -1,20 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Message } from 'semantic-ui-react';
 
 function FlashMessage({ message, removeFlashMessage }) {
-  return (
-    <div
-      style={
-        message.type === 'success'
-          ? { backgroundColor: 'green', color: '#fff' }
-          : { backgroundColor: 'red', color: '#fff' }
-      }
-    >
+  const positive = (
+    <Message positive>
+      {message.text}
       <button onClick={() => removeFlashMessage(message)}>
         <span>&times;</span>
       </button>
+    </Message>
+  );
+
+  const negative = (
+    <Message negative>
       {message.text}
-    </div>
+      <button onClick={() => removeFlashMessage(message)}>
+        <span>&times;</span>
+      </button>
+    </Message>
+  );
+
+  return (
+    <>
+      {message.type === 'success' ? positive : null}
+      {message.type === 'error' ? negative : null}
+    </>
   );
 }
 

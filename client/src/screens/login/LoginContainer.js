@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import LoginView from './LoginView';
+import LoginForm from './LoginForm';
 import * as LoginActions from '../../redux/auth';
 import * as flashMessagesActions from '../../redux/flashMessage';
 
@@ -21,7 +21,7 @@ class LoginContainer extends Component {
   };
 
   render() {
-    return <LoginView {...this.props} facebookResponse={this.facebookResponse} googleResponse={this.googleResponse} />;
+    return <LoginForm {...this.props} facebookResponse={this.facebookResponse} googleResponse={this.googleResponse} />;
   }
 }
 
