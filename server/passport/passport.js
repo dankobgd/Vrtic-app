@@ -81,7 +81,7 @@ passport.use(
         }
 
         // doesnt exist -> create new one
-        const newUser = User.create({
+        const newUser = await User.create({
           auth_method: 'google',
           googleID: profile.id,
           email: profile.emails[0].value,
@@ -113,7 +113,7 @@ passport.use(
         }
 
         // doesnt exist -> create new one
-        const newUser = User.create({
+        const newUser = await User.create({
           auth_method: 'facebook',
           email: profile.emails[0].value,
           facebookID: profile.id,
