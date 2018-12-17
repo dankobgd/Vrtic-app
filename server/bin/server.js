@@ -1,61 +1,33 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
-
 const debug = require('debug')('server:server');
 const http = require('http');
 const app = require('../app');
 const config = require('../config/config');
 
-/**
- * Get port from environment and store in Express.
- */
-
-const port = normalizePort(process.env.PORT || config.port);
+// Use port from config and store in express
+const port = normalizePort(config.port);
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
+// Create HTTP server
 const server = http.createServer(app);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-
+// Listen on provided port, on all network interfaces.
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-/**
- * Normalize a port into a number, string, or false.
- */
-
+// Normalize a port into a number, string, or false.
 function normalizePort(val) {
   const portNumber = parseInt(val, 10);
-
-  if (Number.isNaN(portNumber)) {
-    return val;
-  }
-
-  if (portNumber >= 0) {
-    return portNumber;
-  }
-
+  if (Number.isNaN(portNumber)) return val;
+  if (portNumber >= 0) return portNumber;
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
+// Event listener for HTTP server "error" event.
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+  if (error.syscall !== 'listen') throw error;
 
   const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
 
@@ -74,12 +46,10 @@ function onError(error) {
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
+// Event listener for HTTP server "listening" event.
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
+  console.log(`App is listening on ${bind}`);
 }

@@ -1,10 +1,17 @@
 const path = require('path');
 const { Op } = require('sequelize');
-
 require('dotenv').config();
 
-module.exports = {
-  port: 3001,
+// NODE_ENV
+const ENV = process.env.NODE_ENV || 'development';
+
+// Default configuration
+const defaultConfig = {
+  port: process.env.PORT || 3001,
+};
+
+// Development configuration
+const developmentConfig = {
   email: {
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
@@ -21,23 +28,35 @@ module.exports = {
       dialect: process.env.DIALECT || 'sqlite',
       host: process.env.HOST || 'localhost',
       storage: path.resolve(__dirname, '../../../../SQLite3 DB/vrtic-database.db'),
+      operatorsAliases: Op,
       pool: {
         max: 5,
         min: 0,
         idle: 10000,
-      },
-      operatorsAliases: {
-        $and: Op.and,
-        $or: Op.or,
-        $eq: Op.eq,
-        $gt: Op.gt,
-        $lt: Op.lt,
-        $lte: Op.lte,
-        $like: Op.like,
       },
     },
   },
   authentication: {
     jwtSecret: process.env.JWT_SECRET || 'secret',
   },
+};
+
+// Production configuration
+const productionConfig = { ...developmentConfig };
+
+// Get proper config based on environment
+function getEnvironmentConfig(env) {
+  switch (env) {
+    case 'development':
+      return developmentConfig;
+    case 'production':
+      return productionConfig;
+    default:
+      return productionConfig;
+  }
+}
+
+module.exports = {
+  ...defaultConfig,
+  ...getEnvironmentConfig(ENV),
 };

@@ -156,19 +156,19 @@ export const confirmEmail = token => {
 
 export const forgotPasswordRequest = ({ email }) => {
   return async dispatch => {
-    await api.post('auth/forgotPassword', { email });
+    await api.post('account/forgotPassword', { email });
   };
 };
 
 export const validateResetTokenRequest = token => {
   return async dispatch => {
-    await api.post('auth/resetToken', { token });
+    await api.post('account/resetToken', { token });
   };
 };
 
 export const resetPasswordRequest = data => {
   return async dispatch => {
-    await api.post('auth/resetPassword', {
+    await api.post('account/resetPassword', {
       token: data.token,
       password: data.password,
       confirmPassword: data.confirmPassword,

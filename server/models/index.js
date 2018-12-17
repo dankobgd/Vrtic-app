@@ -20,6 +20,15 @@ Object.keys(db).forEach(modelName => {
   }
 });
 
+(async function testConnection() {
+  try {
+    await sequelize.authenticate();
+    console.log('Connected to DB successfuly');
+  } catch (err) {
+    console.error('Unable to connect to the database:', err);
+  }
+})();
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
